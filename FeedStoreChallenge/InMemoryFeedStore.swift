@@ -9,15 +9,23 @@
 import Foundation
 
 class InMemoryFeedStore: FeedStore {
+    private var store = [Date: [LocalFeedImage]]()
+    
     func deleteCachedFeed(completion: @escaping FeedStore.DeletionCompletion) {
         
     }
     
     func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping FeedStore.InsertionCompletion) {
-        
+        store[timestamp] = feed
+        completion(nil)
     }
     
     func retrieve(completion: @escaping FeedStore.RetrievalCompletion) {
-        completion(.empty)
+        guard let feed = store.first else {
+            completion(.empty)
+            return
+        }
+        
+        completion(.found(feed: feed.value, timestamp: feed.key))
     }
 }
