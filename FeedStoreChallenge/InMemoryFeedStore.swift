@@ -12,6 +12,7 @@ class InMemoryFeedStore: FeedStore {
     private var store = [Date: [LocalFeedImage]]()
     
     func deleteCachedFeed(completion: @escaping FeedStore.DeletionCompletion) {
+        store.removeAll()
         completion(nil)
     }
     
