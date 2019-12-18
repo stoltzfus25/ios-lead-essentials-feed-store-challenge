@@ -12,10 +12,11 @@ class InMemoryFeedStore: FeedStore {
     private var store = [Date: [LocalFeedImage]]()
     
     func deleteCachedFeed(completion: @escaping FeedStore.DeletionCompletion) {
-        
+        completion(nil)
     }
     
     func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping FeedStore.InsertionCompletion) {
+        store.removeAll()
         store[timestamp] = feed
         completion(nil)
     }
